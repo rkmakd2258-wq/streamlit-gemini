@@ -3,6 +3,7 @@ from google import genai
 
 def main():
     st.title('노인 복지 채팅')
+    st.subheader("노인 복지에 관한 궁금한 점을 물어보세요!")
 
     # 세션 상태 초기화
     if "messages" not in st.session_state:
