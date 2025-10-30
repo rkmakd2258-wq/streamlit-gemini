@@ -2,7 +2,7 @@ import streamlit as st
 from google import genai
 
 def main():
-    st.title('노인 복지 채팅 앱')
+    st.title('노인 복지 채팅')
 
     # 세션 상태 초기화
     if "messages" not in st.session_state:
@@ -27,21 +27,13 @@ def main():
         with st.chat_message("assistant"):
             # 로딩 스피너 표시
             with st.spinner('AI가 응답을 생성하고 있습니다...'):
-                # AI 설정과 함께 메시지 컨텍스트 생성
-                messages = [
-                    {
-                        "role": "system",
-                        "content": "어르신들 대상의 서비스니까 친절하고 살갑게 대답해줘. 그리고 대답은 알기 쉬운 용어를 써서 말해줘. 유저 질문이 노인 복지 관련 내용이 아니면, 노인 복지 내용만 질문하도록 해줘."
-                    },
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ]
+                # AI 설정과 함께 컨텍스트 생성
+                system_prompt = "어르신들 대상의 서비스니까 친절하고 살갑게 대답해줘. 그리고 대답은 알기 쉬운 용어를 써서 말해줘. 유저 질문이 노인 복지 관련 내용이 아니면, 노인 복지 내용만 질문하도록 해줘."
+                full_prompt = f"{system_prompt}\n\n사용자: {prompt}"
                 
                 response = client.models.generate_content(
-                    model="gemini-1.5-pro",
-                    contents="Hello!"
+                    model="gemini-2.5-flash",
+                    contents=full_prompt
                 )
                 st.write(response.text)
                 # AI 응답 저장
